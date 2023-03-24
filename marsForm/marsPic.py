@@ -167,13 +167,15 @@ def astronaut_selection():
                               </body>
                             </html>'''
     elif request.method == 'POST':
+        print(request.form['lastName'])
+        print(request.form['firstName'])
         print(request.form['email'])
-        print(request.form['password'])
-        print(request.form['class'])
-        print(request.form['file'])
-        print(request.form['about'])
-        print(request.form['accept'])
+        print(request.form['edu'])
+        print(request.form['prof'])
         print(request.form['sex'])
+        print(request.form['about'])
+        print(request.form['file'])
+        print(request.form['accept'])
         return "Форма отправлена"
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
