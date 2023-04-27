@@ -45,7 +45,7 @@ def promotion_image():
                         </div>
                       </body>
                     </html>'''
-@app.route('/astronaut_selection')
+@app.route('/astronaut_selection', methods=['GET', 'POST'])
 def astronaut_selection():
     if request.method == 'GET':
         return f'''<!doctype html>
@@ -64,7 +64,7 @@ def astronaut_selection():
                               </head>
                               <body>
                                 <div>
-                                    <form class="login_form" method="post">
+                                    <form class="login_form" method="post" enctype="multipart/form-data">
                                         <input type="lastName" class="form-control" id="lastName" placeholder="Введите фамилию" name="lastName">
                                         <input type="firstName" class="form-control" id="firstName" placeholder="Введите имя" name="firstName">
                                         <br>
@@ -74,7 +74,7 @@ def astronaut_selection():
                                             <select class="form-control" id="eduSelect" name="edu">
                                               <option>Начальное</option>
                                               <option>Среднее</option>
-                                              <option>Высшее</option>
+                                               <option>Высшее</option>
                                               <option>Второе высшее</option>
                                             </select>
                                         </div><br>
@@ -170,12 +170,13 @@ def astronaut_selection():
         print(request.form['lastName'])
         print(request.form['firstName'])
         print(request.form['email'])
-        print(request.form['edu'])
+        print(request.form.get('edu'))
         print(request.form['prof'])
         print(request.form['sex'])
         print(request.form['about'])
-        print(request.form['file'])
-        print(request.form['accept'])
+        file = request.files['file']
+        print(file.read())
+        print(request.form.get('accept'))
         return "Форма отправлена"
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
