@@ -1,4 +1,5 @@
 from flask import Flask, url_for, request
+import random
 
 app = Flask(__name__)
 
@@ -6,9 +7,13 @@ app = Flask(__name__)
 @app.route('/')
 def main():
     return "Миссия Колонизация Марса"
+
+
 @app.route('/index')
 def index():
     return "И на Марсе будут яблони цвести!"
+
+
 @app.route('/promotion_image')
 def promotion_image():
     return f'''<!doctype html>
@@ -45,6 +50,8 @@ def promotion_image():
                         </div>
                       </body>
                     </html>'''
+
+
 @app.route('/astronaut_selection', methods=['GET', 'POST'])
 def astronaut_selection():
     if request.method == 'GET':
@@ -178,5 +185,47 @@ def astronaut_selection():
         print(file.read())
         print(request.form.get('accept'))
         return "Форма отправлена"
+
+
+@app.route('/choice/<planet_name>')
+def choice(planet_name):
+    lines = {1: ['Эта планета - почти как Земля;', 'Эта планета близка к Земле;', 'Эта планета далека от Земли;'],
+             2: ['На ней ничего нет;', 'На ней есть все, что пожелаешь;', 'На ней прекрасные виды;',
+                 'На ней все дни замечательные;', 'Жить на ней - радость да и только!;', 'Комфортнее места не найти;',
+                 'На ней даже есть коты;']}
+    first_line = random.choice(lines[1])
+    the_rest = random.sample(lines[2], 4)
+    return f'''<!doctype html>
+                    <html lang="en">
+                      <head>
+                        <meta charset="utf-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                        <link rel="stylesheet"
+                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
+                        crossorigin="anonymous">
+                        <link rel="stylesheet" type="text/css"
+                        href="{url_for('static', filename='css/style.css')}"/>
+                        <title>Варианты выбора</title>
+                      </head>
+                      <body>
+                        <h1>Мое предложение: {planet_name}</h1>
+                        <h5>{first_line}</h5>
+                        <div class="alert alert-success" role="alert">
+                            <h5>{the_rest[0]}</h5>
+                        </div>
+                        <div class="alert alert-secondary" role="alert">
+                            <h5>{the_rest[1]}</h5>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            <h5>{the_rest[2]}</h5>
+                        </div>
+                        <div class="alert alert-danger" role="alert">
+                            <h5>{the_rest[3]}</h5>
+                        </div>
+                      </body>
+                    </html>'''
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
