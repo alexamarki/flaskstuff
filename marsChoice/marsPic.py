@@ -6,13 +6,9 @@ app = Flask(__name__)
 @app.route('/')
 def main():
     return "Миссия Колонизация Марса"
-
-
 @app.route('/index')
 def index():
     return "И на Марсе будут яблони цвести!"
-
-
 @app.route('/promotion_image')
 def promotion_image():
     return f'''<!doctype html>
@@ -49,8 +45,6 @@ def promotion_image():
                         </div>
                       </body>
                     </html>'''
-
-
 @app.route('/astronaut_selection', methods=['GET', 'POST'])
 def astronaut_selection():
     if request.method == 'GET':
@@ -184,7 +178,5 @@ def astronaut_selection():
         print(file.read())
         print(request.form.get('accept'))
         return "Форма отправлена"
-
-
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
