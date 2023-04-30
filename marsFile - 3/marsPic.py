@@ -327,6 +327,7 @@ def load_photo():
             file = request.files['file']
         if file:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'mission_avatar.png'))
+        return "Photo uploaded"
 
 
 if __name__ == '__main__':
